@@ -182,3 +182,59 @@
             navLinks.classList.remove('active');
         }
     });
+
+    // ═══════════════════════════════════════════════════
+    //  SCROLL ANIMATIONS
+    // ════════════════════════════════════════════════
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Add scroll animations to sections
+    document.querySelectorAll('.section-about, .section-techstack, .section-contact').forEach(el => {
+        el.classList.add('scroll-animate', 'slide-up');
+        scrollObserver.observe(el);
+    });
+
+    // Add animations to about content elements
+    document.querySelectorAll('.about-content h1, .about-content h2, .about-content p').forEach((el, index) => {
+        el.classList.add('scroll-animate');
+        if (index % 2 === 0) {
+            el.classList.add('slide-left');
+        } else {
+            el.classList.add('slide-right');
+        }
+        scrollObserver.observe(el);
+    });
+
+    // Add animations to image
+    const aboutImg = document.querySelector('.aboutme-img img');
+    if (aboutImg) {
+        aboutImg.classList.add('scroll-animate', 'scale');
+        scrollObserver.observe(aboutImg);
+    }
+
+    // Add animations to badges and buttons
+    document.querySelectorAll('.badge-all, .btn-1').forEach((el, index) => {
+        el.classList.add('scroll-animate');
+        el.style.animationDelay = (index * 0.1) + 's';
+        el.classList.add('slide-up');
+        scrollObserver.observe(el);
+    });
+
+    // Add animation to tech stack heading
+    const techHeading = document.querySelector('.section-techstack h1');
+    if (techHeading) {
+        techHeading.classList.add('scroll-animate', 'fade-in');
+        scrollObserver.observe(techHeading);
+    }
