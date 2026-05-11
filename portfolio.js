@@ -1,9 +1,88 @@
     // ═══════════════════════════════════════════════════
+    //  THEME (DARK/LIGHT) + PERSISTENCE
+    // ════════════════════════════════════════════════
+    (function initTheme() {
+        const STORAGE_KEY = 'theme';
+
+        function getSavedTheme() {
+            try {
+                const v = window.localStorage.getItem(STORAGE_KEY);
+                return v === 'light' || v === 'dark' ? v : null;
+            } catch {
+                return null;
+            }
+        }
+
+        function setSavedTheme(theme) {
+            try {
+                window.localStorage.setItem(STORAGE_KEY, theme);
+            } catch {
+                // ignore storage failures (privacy mode, etc.)
+            }
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.classList.toggle('theme--light', theme === 'light');
+            window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+        }
+
+        const initial = getSavedTheme() || 'dark';
+        applyTheme(initial);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('theme-toggle');
+            if (!btn) return;
+
+            function syncButton(theme) {
+                const isLight = theme === 'light';
+                btn.setAttribute('aria-pressed', String(isLight));
+                btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+                const icon = btn.querySelector('i');
+                if (icon) icon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+
+            let current = initial;
+            syncButton(current);
+
+            btn.addEventListener('click', () => {
+                current = current === 'light' ? 'dark' : 'light';
+                setSavedTheme(current);
+                applyTheme(current);
+                syncButton(current);
+            });
+
+            window.addEventListener('themechange', (e) => {
+                const next = e?.detail?.theme;
+                if (next === 'light' || next === 'dark') {
+                    current = next;
+                    syncButton(current);
+                }
+            });
+        });
+    })();
+
+    // ═══════════════════════════════════════════════════
     //  PARTICLE NETWORK BACKGROUND ANIMATION
     // ════════════════════════════════════════════════
     (function () {
         const canvas = document.getElementById('bg-canvas');
         const ctx    = canvas.getContext('2d');
+
+        function readCssVar(name, fallback) {
+            const v = getComputedStyle(document.documentElement).getPropertyValue(name);
+            return (v && v.trim()) || fallback;
+        }
+
+        function readThemeColors() {
+            return {
+                bg: readCssVar('--canvas-bg', '#050a14'),
+                particle: readCssVar('--accent', '#38bdf8'),
+                glow: readCssVar('--accent-2', '#0ea5e9'),
+                lineBase: readCssVar('--accent-rgb', '56,189,248'),
+                gradCenter: readCssVar('--canvas-grad-center', 'rgba(14,30,60,0.55)'),
+                gradEdge: readCssVar('--canvas-grad-edge', 'rgba(5,10,20,0)'),
+            };
+        }
 
         // ── Config ──────────────────────────────────────
         const CONFIG = {
@@ -12,10 +91,7 @@
             particleRadius: 2,
             speed         : 0.45,
             colors: {
-                bg          : '#050a14',
-                particle    : '#38bdf8',   // sky-400
-                lineBase    : '56,189,248', // same in r,g,b for rgba
-                glow        : '#0ea5e9',
+                ...readThemeColors(),
             },
             mousePush     : 100,       // radius of mouse repulsion
             mousePushForce: 0.6,
@@ -91,8 +167,8 @@
 
             // subtle gradient overlay on top of the solid CSS bg
             const grad = ctx.createRadialGradient(W * 0.5, H * 0.4, 0, W * 0.5, H * 0.4, W * 0.75);
-            grad.addColorStop(0,   'rgba(14,30,60,0.55)');
-            grad.addColorStop(1,   'rgba(5,10,20,0)');
+            grad.addColorStop(0, CONFIG.colors.gradCenter);
+            grad.addColorStop(1, CONFIG.colors.gradEdge);
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, W, H);
 
@@ -149,6 +225,9 @@
         window.addEventListener('resize', () => { resize(); });
         window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
         window.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
+        window.addEventListener('themechange', () => {
+            Object.assign(CONFIG.colors, readThemeColors());
+        });
 
         // ── Boot ────────────────────────────────────────
         init();
@@ -184,57 +263,187 @@
     });
 
     // ═══════════════════════════════════════════════════
-    //  SCROLL ANIMATIONS
+    //  LOADING SCREEN (HIDE WHEN FULLY LOADED)
     // ════════════════════════════════════════════════
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
+    window.addEventListener('load', () => {
+        const preloader = document.getElementById('preloader');
+        if (!preloader) return;
 
-    const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-                scrollObserver.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
+        const MIN_DURATION_MS = 1600;
+        const start = Number(preloader.dataset.start || Date.now());
+        const elapsed = Date.now() - start;
+        const remaining = Math.max(0, MIN_DURATION_MS - elapsed);
 
-    // Add scroll animations to sections
-    document.querySelectorAll('.section-about, .section-techstack, .section-contact').forEach(el => {
-        el.classList.add('scroll-animate', 'slide-up');
-        scrollObserver.observe(el);
+        window.setTimeout(() => {
+            preloader.classList.add('preloader--hide');
+
+            // Remove from DOM after fade-out
+            window.setTimeout(() => {
+                preloader.remove();
+            }, 400);
+        }, remaining);
     });
 
-    // Add animations to about content elements
-    document.querySelectorAll('.about-content h1, .about-content h2, .about-content p').forEach((el, index) => {
-        el.classList.add('scroll-animate');
-        if (index % 2 === 0) {
-            el.classList.add('slide-left');
-        } else {
-            el.classList.add('slide-right');
+    // Start the 3s progress animation as early as possible
+    (function startPreloaderProgress() {
+        const preloader = document.getElementById('preloader');
+        if (!preloader) return;
+        preloader.dataset.start = String(Date.now());
+        preloader.classList.add('preloader--run');
+    })();
+
+    // ═══════════════════════════════════════════════════
+    //  SIMPLE CHATBOT WIDGET (LOCAL, NO API)
+    // ════════════════════════════════════════════════
+    (function initChatbot() {
+        const launcher = document.getElementById('chat-launcher');
+        const panel = document.getElementById('chatbot');
+        const closeBtn = document.getElementById('chatbot-close');
+        const body = document.getElementById('chatbot-body');
+        const form = document.getElementById('chatbot-form');
+        const input = document.getElementById('chatbot-input');
+        const chipsWrap = document.getElementById('chatbot-chips');
+
+        if (!launcher || !panel || !closeBtn || !body || !form || !input) return;
+
+        const BOT_NAME = 'Erick.dev';
+
+        function escapeHtml(str) {
+            return String(str)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
         }
-        scrollObserver.observe(el);
-    });
 
-    // Add animations to image
-    const aboutImg = document.querySelector('.aboutme-img img');
-    if (aboutImg) {
-        aboutImg.classList.add('scroll-animate', 'scale');
-        scrollObserver.observe(aboutImg);
-    }
+        function scrollToBottom() {
+            body.scrollTop = body.scrollHeight;
+        }
 
-    // Add animations to badges and buttons
-    document.querySelectorAll('.badge-all, .btn-1').forEach((el, index) => {
-        el.classList.add('scroll-animate');
-        el.style.animationDelay = (index * 0.1) + 's';
-        el.classList.add('slide-up');
-        scrollObserver.observe(el);
-    });
+        function addMsg(role, text) {
+            const el = document.createElement('div');
+            el.className = `chatbot__msg chatbot__msg--${role}`;
+            el.innerHTML = escapeHtml(text);
+            body.appendChild(el);
+            scrollToBottom();
+            return el;
+        }
 
-    // Add animation to tech stack heading
-    const techHeading = document.querySelector('.section-techstack h1');
-    if (techHeading) {
-        techHeading.classList.add('scroll-animate', 'fade-in');
-        scrollObserver.observe(techHeading);
-    }
+        function addTyping() {
+            const el = document.createElement('div');
+            el.className = 'chatbot__msg chatbot__msg--bot';
+            el.innerHTML =
+                '<span class="chatbot__typing" aria-label="Typing">' +
+                '<span class="chatbot__typingDot"></span>' +
+                '<span class="chatbot__typingDot"></span>' +
+                '<span class="chatbot__typingDot"></span>' +
+                '</span>';
+            body.appendChild(el);
+            scrollToBottom();
+            return el;
+        }
+
+        function openChat() {
+            panel.classList.add('chatbot--open');
+            panel.setAttribute('aria-hidden', 'false');
+            window.setTimeout(() => input.focus(), 50);
+        }
+
+        function closeChat() {
+            panel.classList.remove('chatbot--open');
+            panel.setAttribute('aria-hidden', 'true');
+        }
+
+        function normalize(s) {
+            return String(s || '').trim().toLowerCase();
+        }
+
+        function answerFor(textRaw) {
+            const text = normalize(textRaw);
+
+            if (text.includes('who') || text.includes('about') || text.includes('name')) {
+                return `Hey! I'm ${BOT_NAME}. I can answer questions about Erick — skills, projects, availability, or how to contact him.`;
+            }
+
+            if (text.includes('skill') || text.includes('stack') || text.includes('tech')) {
+                return `Erick’s main stack: HTML, CSS, JavaScript, PHP, MySQL.\nTools: Git/GitHub, VS Code, Windows, Figma.`;
+            }
+
+            if (text.includes('project') || text.includes('work') || text.includes('portfolio')) {
+                return `Erick builds student web projects (frontend + basic backend).\nTell me what kind of app you need and I’ll suggest a good approach.`;
+            }
+
+            if (text.includes('hire') || text.includes('available') || text.includes('freelance') || text.includes('job')) {
+                return `Yes — you can reach Erick via the Contact section.\nTell me your project goal + deadline + budget range and I’ll help you draft a message.`;
+            }
+
+            if (text.includes('hello') || text === 'hi' || text.includes('hey')) {
+                return `Hi! Ask me anything about Erick (skills, projects, or contact).`;
+            }
+            
+            if (text.includes('gmail' || text.includes('facebook') || text.includes('discord'))) {
+                return 'Just clike the cheack the in the section \ncontact and you can see the icon and clik it.';
+            }
+
+            return `I can help with:\n- About Erick\n- Skills / tech stack\n- Projects\n- Hiring / contact\n\nTry: "Your skills?"`;
+        }
+
+        function respond(userText) {
+            addMsg('user', userText);
+
+            const typing = addTyping();
+            const reply = answerFor(userText);
+
+            window.setTimeout(() => {
+                typing.remove();
+                addMsg('bot', reply);
+            }, 520);
+        }
+
+        // Seed first bot message once
+        if (body.childElementCount === 0) {
+            addMsg('bot', `Hey! I'm ${BOT_NAME}. Ask me anything about  Erick.dev — skills, projects, or just say hi!`);
+        }
+
+        launcher.addEventListener('click', () => {
+            const isOpen = panel.classList.contains('chatbot--open');
+            if (isOpen) closeChat();
+            else openChat();
+        });
+
+        closeBtn.addEventListener('click', closeChat);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeChat();
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const value = input.value.trim();
+            if (!value) return;
+            input.value = '';
+            respond(value);
+        });
+
+        if (chipsWrap) {
+            chipsWrap.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-chip]');
+                if (!btn) return;
+                const id = btn.getAttribute('data-chip');
+                const map = {
+                    who: 'Who are you?',
+                    skills: 'Your skills?',
+                    projects: 'Projects?',
+                    hire: 'Hire you?',
+                };
+                respond(map[id] || btn.textContent || 'Hi');
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!panel.classList.contains('chatbot--open')) return;
+            const inside = e.target.closest('#chatbot') || e.target.closest('#chat-launcher');
+            if (!inside) closeChat();
+        });
+    })();

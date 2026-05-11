@@ -8,6 +8,16 @@
     <title>Erick.dev</title>
 </head>
 <body>
+    <!-- Loading screen -->
+    <div id="preloader" class="preloader" role="status" aria-live="polite" aria-label="Loading">
+        <div class="preloader__inner">
+            <div class="preloader__brand">Erick.dev</div>
+            <div class="preloader__bar" aria-hidden="true">
+                <div class="preloader__barFill"></div>
+            </div>
+            <div class="preloader__text">Loading portfolio...</div>
+        </div>
+    </div>
 
     <!-- Background canvas (sits behind everything) -->
     <canvas id="bg-canvas"></canvas>
@@ -45,6 +55,11 @@
                     <span>Contact</span>
                 </a>
             </div>
+
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode">
+                <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                <span>Theme</span>
+            </button>
         </nav>
     </header>
 
@@ -184,10 +199,62 @@
         </div>
     </section>
 
+    <!-- Chatbot widget -->
+    <button class="chat-launcher" id="chat-launcher" type="button" aria-label="Open chat">
+        <i class="fa-regular fa-comment-dots" aria-hidden="true"></i>
+    </button>
+
+    <section class="chatbot" id="chatbot" aria-hidden="true" aria-label="Chatbot">
+        <div class="chatbot__header">
+            <div class="chatbot__avatar" aria-hidden="true">E</div>
+            <div class="chatbot__meta">
+                <div class="chatbot__title">Erick.dev</div>
+                <div class="chatbot__status"><span class="chatbot__dot" aria-hidden="true"></span> Online</div>
+            </div>
+            <button class="chatbot__close" id="chatbot-close" type="button" aria-label="Close chat">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="chatbot__body" id="chatbot-body" role="log" aria-live="polite" aria-relevant="additions">
+            <!-- Messages injected by JS -->
+        </div>
+
+        <div class="chatbot__chips" id="chatbot-chips" aria-label="Quick replies">
+            <button class="chatbot__chip" type="button" data-chip="who">Who are you?</button>
+            <button class="chatbot__chip" type="button" data-chip="skills">Your skills?</button>
+            <button class="chatbot__chip" type="button" data-chip="projects">Projects?</button>
+            <button class="chatbot__chip" type="button" data-chip="hire">Hire you?</button>
+        </div>
+
+        <form class="chatbot__composer" id="chatbot-form" autocomplete="off">
+            <input class="chatbot__input" id="chatbot-input" type="text" placeholder="Ask me anything..." aria-label="Message" />
+            <button class="chatbot__send" type="submit" aria-label="Send message">
+                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </form>
+    </section>
+
+    <!-- <section id="Favorite-band" class="band-artist">
+        <h3>FAVORITE BAND & ARTIST</h3>
+        <h1>BAND & ARTIST</h1>
+        <div class="band">
+            <div class="img-band">
+                <img src="" alt="">
+                <img src="" alt="">
+                <img src="" alt="">
+                <img src="" alt="">
+
+            </div>
+        </div>
+    </section> -->
+
     <footer>
     <p>&copy; 2026 Erick Gozo. All rights reserved.</p>
     <p>DESIGNED AND BUILT BY ERIck GOZO</p>
     </footer>
+
+    
 
     <script src="portfolio.js"></script>
 </body>
