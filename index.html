@@ -10,12 +10,12 @@
 <body>
     <!-- Loading screen -->
     <div id="preloader" class="preloader" role="status" aria-live="polite" aria-label="Loading">
-        <div class="preloader__inner">
-            <div class="preloader__brand">Erick.dev</div>
-            <div class="preloader__bar" aria-hidden="true">
-                <div class="preloader__barFill"></div>
+        <div class="preloader-inner">
+            <div class="preloader-brand">Erick.dev</div>
+            <div class="preloader-bar" aria-hidden="true">
+                <div class="preloader-barFill"></div>
             </div>
-            <div class="preloader__text">Loading portfolio...</div>
+            <div class="preloader-text">Loading portfolio...</div>
         </div>
     </div>
 
@@ -199,37 +199,37 @@
         </div>
     </section>
 
-    <!-- Chatbot widget -->
+    <!-- Chatbot -->
     <button class="chat-launcher" id="chat-launcher" type="button" aria-label="Open chat">
         <i class="fa-regular fa-comment-dots" aria-hidden="true"></i>
     </button>
 
     <section class="chatbot" id="chatbot" aria-hidden="true" aria-label="Chatbot">
-        <div class="chatbot__header">
-            <div class="chatbot__avatar" aria-hidden="true">E</div>
-            <div class="chatbot__meta">
-                <div class="chatbot__title">Erick.dev</div>
-                <div class="chatbot__status"><span class="chatbot__dot" aria-hidden="true"></span> Online</div>
+        <div class="chatbot-header">
+            <div class="chatbot-avatar" aria-hidden="true">E</div>
+            <div class="chatbot-meta">
+                <div class="chatbot-title">Erick.dev</div>
+                <div class="chatbot-status"><span class="chatbot-dot" aria-hidden="true"></span> Online</div>
             </div>
-            <button class="chatbot__close" id="chatbot-close" type="button" aria-label="Close chat">
+            <button class="chatbot-close" id="chatbot-close" type="button" aria-label="Close chat">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
 
-        <div class="chatbot__body" id="chatbot-body" role="log" aria-live="polite" aria-relevant="additions">
+        <div class="chatbot-body" id="chatbot-body" role="log" aria-live="polite" aria-relevant="additions">
             <!-- Messages injected by JS -->
         </div>
 
-        <div class="chatbot__chips" id="chatbot-chips" aria-label="Quick replies">
-            <button class="chatbot__chip" type="button" data-chip="who">Who are you?</button>
-            <button class="chatbot__chip" type="button" data-chip="skills">Your skills?</button>
-            <button class="chatbot__chip" type="button" data-chip="projects">Projects?</button>
-            <button class="chatbot__chip" type="button" data-chip="hire">Hire you?</button>
+        <div class="chatbot-chips" id="chatbot-chips" aria-label="Quick replies">
+            <button class="chatbot-chip" type="button" data-chip="who">Who are you?</button>
+            <button class="chatbot-chip" type="button" data-chip="skills">Your TECH STACK?</button>
+            <button class="chatbot-chip" type="button" data-chip="projects">Projects?</button>
+            <button class="chatbot-chip" type="button" data-chip="hire">Hire you?</button>
         </div>
 
-        <form class="chatbot__composer" id="chatbot-form" autocomplete="off">
-            <input class="chatbot__input" id="chatbot-input" type="text" placeholder="Ask me anything..." aria-label="Message" />
-            <button class="chatbot__send" type="submit" aria-label="Send message">
+        <form class="chatbot-composer" id="chatbot-form" autocomplete="off">
+            <input class="chatbot-input" id="chatbot-input" type="text" placeholder="Ask me anything..." aria-label="Message" />
+            <button class="chatbot-send" type="submit" aria-label="Send message">
                 <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
             </button>
         </form>

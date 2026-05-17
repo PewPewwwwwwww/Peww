@@ -323,7 +323,7 @@
 
         function addMsg(role, text) {
             const el = document.createElement('div');
-            el.className = `chatbot__msg chatbot__msg--${role}`;
+            el.className = `chatbot-msg chatbot-msg--${role}`;
             el.innerHTML = escapeHtml(text);
             body.appendChild(el);
             scrollToBottom();
@@ -332,12 +332,12 @@
 
         function addTyping() {
             const el = document.createElement('div');
-            el.className = 'chatbot__msg chatbot__msg--bot';
+            el.className = 'chatbot-msg chatbot-msg--bot';
             el.innerHTML =
-                '<span class="chatbot__typing" aria-label="Typing">' +
-                '<span class="chatbot__typingDot"></span>' +
-                '<span class="chatbot__typingDot"></span>' +
-                '<span class="chatbot__typingDot"></span>' +
+                '<span class="chatbot-typing" aria-label="Typing">' +
+                '<span class="chatbot-typingDot"></span>' +
+                '<span class="chatbot-typingDot"></span>' +
+                '<span class="chatbot-typingDot"></span>' +
                 '</span>';
             body.appendChild(el);
             scrollToBottom();
@@ -363,7 +363,7 @@
             const text = normalize(textRaw);
 
             if (text.includes('who') || text.includes('about') || text.includes('name')) {
-                return `Hey! I'm ${BOT_NAME}. I can answer questions about Erick — skills, projects, availability, or how to contact him.`;
+                return `Hey! I'm ${BOT_NAME}. I can answer questions about Erick skills, projects, availability, or how to contact him.`;
             }
 
             if (text.includes('skill') || text.includes('stack') || text.includes('tech')) {
@@ -375,7 +375,7 @@
             }
 
             if (text.includes('hire') || text.includes('available') || text.includes('freelance') || text.includes('job')) {
-                return `Yes — you can reach Erick via the Contact section.\nTell me your project goal + deadline + budget range and I’ll help you draft a message.`;
+                return `Yes  you can reach Erick via the Contact section.\nTell me your project goal + deadline + budget range and I’ll help you draft a message.`;
             }
 
             if (text.includes('hello') || text === 'hi' || text.includes('hey')) {
@@ -386,7 +386,7 @@
                 return 'Just clike the cheack the in the section \ncontact and you can see the icon and clik it.';
             }
 
-            return `I can help with:\n- About Erick\n- Skills / tech stack\n- Projects\n- Hiring / contact\n\nTry: "Your skills?"`;
+            return `I can help with: Just go to contact and messege me `;
         }
 
         function respond(userText) {
@@ -403,7 +403,7 @@
 
         // Seed first bot message once
         if (body.childElementCount === 0) {
-            addMsg('bot', `Hey! I'm ${BOT_NAME}. Ask me anything about  Erick.dev — skills, projects, or just say hi!`);
+            addMsg('bot', `Hey! I'm ${BOT_NAME}. Ask me anything about  Erick.dev skills, projects, or just say hi!`);
         }
 
         launcher.addEventListener('click', () => {
@@ -433,7 +433,7 @@
                 const id = btn.getAttribute('data-chip');
                 const map = {
                     who: 'Who are you?',
-                    skills: 'Your skills?',
+                    skills: 'Your TECH STACK?',
                     projects: 'Projects?',
                     hire: 'Hire you?',
                 };
