@@ -4,35 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="portfolio.css">
-    <title>Erick.dev</title>
+    <title>Portfolio || Erick Gozo</title>
+    <link rel="stylesheet" href="Erick_Styles.css">
 </head>
 <body>
-    <!-- Loading screen -->
-    <div id="preloader" class="preloader" role="status" aria-live="polite" aria-label="Loading">
-        <div class="preloader-inner">
-            <div class="preloader-brand">Erick.dev</div>
-            <div class="preloader-bar" aria-hidden="true">
-                <div class="preloader-barFill"></div>
-            </div>
-            <div class="preloader-text">Loading portfolio...</div>
-        </div>
-    </div>
-
-    <!-- Background canvas (sits behind everything) -->
-    <canvas id="bg-canvas"></canvas>
-
     <header>
         <nav>
-            <div class="my-name">
-                <h1>ErickGozo.dev</h1>
+            <div class="logo-name">
+                <h1>Erick</h1>
             </div>
-
-            <button class="hamburger" id="hamburger">
-                <span>.</span>
-                <span></span>
-                <span></span>
-            </button>
 
             <div class="links" id="nav-links">
                 <a href="#Home">
@@ -40,14 +20,14 @@
                     <span>Home</span>
                 </a>
 
-                <a href="https://github.com/PewPewwwwwwww">
-                    <i class="fa-brands fa-github"></i>
-                    <span>Github</span>
+                <a href="#project">
+                    <i class="fa-solid fa-head-side-virus"></i>
+                    <span>Project</span>
                 </a>
 
-                <a href="#tech">
-                    <i class="fa-solid fa-head-side-virus"></i>
-                    <span>Skills</span>
+                <a href="https://group3a.cmdevs.tech/">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Team</span>
                 </a>
 
                 <a href="#contact">
@@ -55,42 +35,64 @@
                     <span>Contact</span>
                 </a>
             </div>
-
-            <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode">
-                <i class="fa-solid fa-moon" aria-hidden="true"></i>
-                <span>Theme</span>
-            </button>
         </nav>
-    </header>
 
+        <button id="theme-switch">
+            <i class="fa-solid fa-moon"></i>
+            <i class="fa-solid fa-sun"></i>
+        </button>
+    </header>
+    
     <section id="Home" class="section-intro">
         <div class="intro">
             <h1>HI There I'm Erick Gozo</h1>
             <h3>IM A FRONTEND DEVELOPER</h3>
+
             <p>I am a frontend developer since 2025, passionate about building modern web designs. I enjoy creating clean, responsive, and user-friendly interfaces that bring ideas to life.</p>
 
-            <a class="btn-1" href="#about-me">About Me</a>
-            <a class="btn-1" href="#tech">Get In Touch</a>
+            <a class="btn-1" href="#About-Me">About Me</a>
+            <a class="btn-1" href="#tech">Get In Tech</a>
         </div>
     </section>
 
-    <section id="about-me" class="section-about">
+    <section id="About-Me" class="section-about">
         <div class="about-content">
-            <!-- <div class="rectangle"></div> -->
-            <h1>IT Student / Web Developer (Student Projects)</h1>
-            <h2>ABOUT ME</h2>
-            <p>Developed web applications using HTML, CSS, JavaScript, and PHP for academic projects.</p>
-            <p>Created and managed MySQL databases to store, organize, and retrieve system data efficiently.</p>
+            <h1>IT Student / Frontend Developer (Student Projects)</h1>
+            <h3>ABOUT ME</h3>
+            <p>Developed web applications using HTML, CSS, Simple JavaScript for academic projects.</p>
             <p>Built user-friendly web-based systems with intuitive interfaces for practical learning projects.</p>
             <p>Designed responsive layouts to ensure compatibility across mobile and desktop devices.</p>
             <p>Tested, debugged, and optimized applications to improve performance and usability.</p>
 
-            <div class="aboutme-img">
-                <img src="654617348_1591658231890095_6443212223182264566_n.jpg" alt="profile">
+            <div class="about-img">
+                <img src="img/profile.jpg" alt="profile">
             </div>
         </div>
     </section>
 
+    <section id="project" class="section-project">
+        <h2>Recent Projects</h2>
+        
+        <div class="project-grid">
+            <div class="project-card">
+                <img src="img/pg2.png" alt="Project X">
+                <h3>Activity</h3>
+                <p>A responsive movie gallery website that showcases popular movies in a clean and organized grid layout, providing users with an easy and visually appealing browsing experience. I create This Project With a simple HTML CSS</p>
+            </div>
+
+            <div class="project-card">
+                <img src="img/pg3.png" alt="Project Y">
+                <h3>Todo List</h3>
+                <p>A task management app that helps users organize and track their daily activities, I create This Project With a simple HTML CSS JavaScript.</p>
+            </div>
+
+            <div class="project-card">
+                <img src="img/pg4.png" alt="Project Z">
+                <h3>Facebook Login</h3>
+                <p>A responsive clone of Facebook's login page created to practice HTML and CSS layout and styling. simple HTML CSS</p>
+            </div>
+        </div>
+    </section>
 
     <section id="tech" class="section-techstack">
         <h1>TECH STACK</h1>
@@ -99,87 +101,70 @@
         <div class="badge">
             <div class="badge-raw">
 
-            <span class="badge-all b-js">
-                <i class="fa-brands fa-js"></i>
-                javascript
-            </span>
+                <div class="badge-all b-js">
+                    <i class="fa-brands fa-js"></i>
+                    <span>javascript</span>
+                </div>
+    
+                <div class="badge-all b-pawn">
+                    <i class="fa-solid fa-chess-pawn"></i>
+                    <span>PAWN</span>
+                </div>
+    
+                <div class="badge-all b-html">
+                    <i class="fa-brands fa-html5"></i>
+                    <span>HTML</span>
+                </div>
+    
+                <div class="badge-all b-css">
+                    <i class="fa-brands fa-css3-alt"></i>
+                    <span>CSS</span>
+                </div>
+    
+            </div>
 
-             <span class="badge-all b-php">
-                <i class="fa-brands fa-php"></i>
-                PHP
-            </span>
+            <p>Frameworks, languages, and tools I use frequently but don't fall into my primary or secondary stacks. My proficiency with them varies, but I maintain a solid medium to high-level of expertise:</p>
 
-             <span class="badge-all b-nodejs">
-                <i class="fa-brands fa-node-js"></i>
-                NUDEJS
-            </span>
-
-            <span class="badge-all b-pawn">
-                <i class="fa-solid fa-chess-pawn"></i>
-                PAWN
-            </span>
-
-            <span class="badge-all b-html">
-                <i class="fa-brands fa-html5"></i>
-                HTML
-            </span>
-
-            <span class="badge-all b-css">
-                <i class="fa-brands fa-css3-alt"></i>
-                CSS
-            </span>
-
-            <span class="badge-all b-mysql">
-                <i class="fa-solid fa-database"></i>
-                MYSQL
-            </span>
-
+            <div class="badge">
+                <div class="badge-raw">
+    
+                <div class="badge-all b-git">
+                    <i class="fa-brands fa-git-alt"></i>
+                    <span>GIT</span>
+                </div>
+    
+                 <div class="badge-all b-github">
+                    <i class="fa-brands fa-square-github"></i>
+                    <span>GITHUB</span>
+                </div>
+    
+                 <div class="badge-all b-windows">
+                    <i class="fa-brands fa-windows"></i>
+                    <span>WINDOWS</span>
+                </div>
+    
+                <div class="badge-all b-vscode">
+                    <i class="fa-solid fa-code"></i>
+                    <span>VISUAL STUDIO CODE</span>
+                </div>
+    
+                <div class="badge-all b-visualstudio">
+                    <i class="fa-solid fa-laptop-code"></i>
+                   <span>VISUAL STUDIO</span>
+                </div>
+    
+                <div class="badge-all b-figma">
+                    <i class="fa-brands fa-figma"></i>
+                    <span>FIGMA</span>
+                </div>
+            </div>
         </div>
-     </div>
-
-    <p>Frameworks, languages, and tools I use frequently but don't fall into my primary or secondary stacks. My proficiency with them varies, but I maintain a solid medium to high-level of expertise:h</p>
-
-    <div class="badge">
-            <div class="badge-raw">
-
-            <span class="badge-all b-git">
-                <i class="fa-brands fa-git-alt"></i>
-                GIT
-            </span>
-
-             <span class="badge-all b-github">
-                <i class="fa-brands fa-square-github"></i>
-                GITHUB
-            </span>
-
-             <span class="badge-all b-windows">
-                <i class="fa-brands fa-windows"></i>
-                WINDOWS
-            </span>
-
-            <span class="badge-all b-vscode">
-                <i class="fa-solid fa-code"></i>
-                VISUAL STUDIO CODE
-            </span>
-
-            <span class="badge-all b-visualstudio">
-                <i class="fa-solid fa-laptop-code"></i>
-                VISUAL STUDIO
-            </span>
-
-            <span class="badge-all b-figma">
-                <i class="fa-brands fa-figma"></i>
-                FIGMA
-            </span>
-
-        </div>
-     </div>
     </section>
 
     <section id="contact" class="section-contact">
         <h2>LET’S WORK TOGETHER</h2>
         <p>Have something in mind? Let’s collaborate and transform your ideas into a beautiful digital experience.</p>
-        <a class="btn-1" href="https://mail.google.com/mail/?view=cm&fs=1&to=gozoerick28@gmail.com" target="">Let's Connect</a>
+        <a class="btn-1" href="https://mail.google.com/mail/u/1/#inbox?compose=DmwnWsdJKSxWpZvCPpMznGrnVcnrTdDkjzQHtrVZSLNZJxsXLFFHtmlJDXDZMSBMGHhbrJXlxzqV" target="">Let's Connect</a>
 
         <div class="contact-links">
             <a href="https://www.facebook.com/erick.gozo.1">
@@ -192,70 +177,19 @@
                 <span>Discord</span>
             </a>
 
-             <a href="https://www.facebook.com/erick.gozo.1">
-                <i class="fa-regular fa-envelope"></i>
-                <span>Gmail</span>
+            <a href="https://github.com/PewPewwwwwwww">
+                <i class="fa-brands fa-github"></i>
+                <span>Github</span>
             </a>
         </div>
     </section>
 
-    <!-- Chatbot -->
-    <button class="chat-launcher" id="chat-launcher" type="button" aria-label="Open chat">
-        <i class="fa-regular fa-comment-dots" aria-hidden="true"></i>
-    </button>
-
-    <section class="chatbot" id="chatbot" aria-hidden="true" aria-label="Chatbot">
-        <div class="chatbot-header">
-            <div class="chatbot-avatar" aria-hidden="true">E</div>
-            <div class="chatbot-meta">
-                <div class="chatbot-title">Erick.dev</div>
-                <div class="chatbot-status"><span class="chatbot-dot" aria-hidden="true"></span> Online</div>
-            </div>
-            <button class="chatbot-close" id="chatbot-close" type="button" aria-label="Close chat">
-                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-            </button>
-        </div>
-
-        <div class="chatbot-body" id="chatbot-body" role="log" aria-live="polite" aria-relevant="additions">
-            <!-- Messages injected by JS -->
-        </div>
-
-        <div class="chatbot-chips" id="chatbot-chips" aria-label="Quick replies">
-            <button class="chatbot-chip" type="button" data-chip="who">Who are you?</button>
-            <button class="chatbot-chip" type="button" data-chip="skills">Your TECH STACK?</button>
-            <button class="chatbot-chip" type="button" data-chip="projects">Projects?</button>
-            <button class="chatbot-chip" type="button" data-chip="hire">Hire you?</button>
-        </div>
-
-        <form class="chatbot-composer" id="chatbot-form" autocomplete="off">
-            <input class="chatbot-input" id="chatbot-input" type="text" placeholder="Ask me anything..." aria-label="Message" />
-            <button class="chatbot-send" type="submit" aria-label="Send message">
-                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-            </button>
-        </form>
-    </section>
-
-    <!-- <section id="Favorite-band" class="band-artist">
-        <h3>FAVORITE BAND & ARTIST</h3>
-        <h1>BAND & ARTIST</h1>
-        <div class="band">
-            <div class="img-band">
-                <img src="" alt="">
-                <img src="" alt="">
-                <img src="" alt="">
-                <img src="" alt="">
-
-            </div>
-        </div>
-    </section> -->
-
     <footer>
-    <p>&copy; 2026 Erick Gozo. All rights reserved.</p>
-    <p>DESIGNED AND BUILT BY ERIck GOZO</p>
+        <p>&copy; 2026 Erick Gozo. All rights reserved.</p>
+        <p>DESIGNED AND BUILT BY ERICK GOZO</p>
     </footer>
-
     
 
-    <script src="portfolio.js"></script>
+    <script src="Erick_Main.js"></script>
 </body>
 </html>
